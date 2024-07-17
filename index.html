@@ -7,6 +7,54 @@
     <title>Arjun R | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assests/style.css">
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAEZbNnrclDvRNapecDts6j3k-F9ZkqdOM",
+        authDomain: "arjun-r-portfolio.firebaseapp.com",
+        projectId: "arjun-r-portfolio",
+        storageBucket: "arjun-r-portfolio.appspot.com",
+        messagingSenderId: "633572898424",
+        appId: "1:633572898424:web:75c3d87fdbc694eec25f8d",
+        measurementId: "G-FDRG22FN1Q"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Function to handle form submission
+      async function submitContactForm(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const mail = document.getElementById('mail').value;
+        const phone = document.getElementById('phone').value;
+        const description = document.getElementById('description').value;
+
+        try {
+          const docRef = await addDoc(collection(db, "contacts"), {
+            name: name,
+            mail: mail,
+            phone: phone,
+            description: description
+          });
+          alert("Message sent successfully!");
+          document.getElementById('contactForm').reset();
+        } catch (error) {
+          console.error("Error adding document: ", error);
+          alert("There was an error sending your message. Please try again.");
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('contactForm').addEventListener('submit', submitContactForm);
+      });
+    </script>
 </head>
 <body>
     <header>
